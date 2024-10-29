@@ -12,3 +12,96 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Size {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum Space {
+  APARTMENT_FRIENDLY
+  INDOOR_ONLY
+  NEEDS_REGULAR_OUTDOOR_ACESS
+  HIGH_ACTIVITY_SPACE
+}
+
+enum Independence {
+  HIGHLY
+  MODERATELY
+  DEPENDENT
+}
+
+enum Type {
+  CAT
+  DOG
+  BIRD
+}
+
+model Org {
+  id            String @id @default(uuid())
+  responsible   String
+  email         String @unique
+  password_hash String
+  phone         String
+
+  address    Address @relation(fields: [address_id], references: [id])
+  address_id String
+
+  adoption Adoption[]
+
+  @@map("orgs")
+}
+
+model Pet {
+  id    String  @id @default(uuid())
+  name  String
+  bio   String?
+  size  Size
+  age   Int
+  type  Type
+  breed String?
+
+  medical_info String?
+
+  energy_level       Int          @default(1)
+  space_needs        Space        @default(NEEDS_REGULAR_OUTDOOR_ACESS)
+  independence_level Independence @default(MODERATELY)
+
+  address    Address @relation(fields: [address_id], references: [id])
+  address_id String
+
+  adoption Adoption[]
+
+  @@map("pets")
+}
+
+model Address {
+  id           String @id @default(uuid())
+  street       String
+  state        String
+  city         String
+  neighborhood String
+  zip_code     String
+  number       String
+
+  pet Pet[]
+  org Org[]
+
+  @@map("addresses")
+}
+
+model Adoption {
+  id String @id @default(uuid())
+
+  pet    Pet    @relation(fields: [pet_id], references: [id], onDelete: Cascade)
+  pet_id String
+
+  org    Org    @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  org_id String
+
+  created_at DateTime  @default(now())
+  adopted_at DateTime?
+
+  @@map("adoptions")
+}
