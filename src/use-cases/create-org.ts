@@ -5,7 +5,7 @@ import { OrgsRepository } from "@/repositories/orgs-repository"
 
 const { hash } = bcryptjs
 
-interface CreateOrgsUseCaseRequest {
+interface CreateOrgUseCaseRequest {
   responsible: string
   email: string
   password: string
@@ -18,7 +18,7 @@ interface CreateOrgsUseCaseRequest {
   neighborhood: string
 }
 
-interface CreateOrgsUseCaseResponse {
+interface CreateOrgUseCaseResponse {
   org: Org
 }
 
@@ -36,7 +36,7 @@ export class CreateOrgUseCase {
     street,
     zip_code,
     residencial_number,
-  }: CreateOrgsUseCaseRequest): Promise<CreateOrgsUseCaseResponse> {
+  }: CreateOrgUseCaseRequest): Promise<CreateOrgUseCaseResponse> {
     const orgExists = await this.orgsRepository.findByEmail(email)
 
     if (orgExists) {

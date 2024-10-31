@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { CreateOrgUseCase } from "./create-org"
 import { OrgsRepository } from "@/repositories/orgs-repository"
-import { InMemoryOrgRepository } from "@/repositories/in-memory/in-memory-orgs-repository"
 import { OrgAlreadyExists } from "./error/org-already-exists-error"
+import { InMemoryOrgsRepository } from "@/repositories/in-memory/in-memory-orgs-repository"
 
 let orgsRepository: OrgsRepository
 let sut: CreateOrgUseCase
 
 describe("Create org", () => {
   beforeEach(() => {
-    orgsRepository = new InMemoryOrgRepository()
+    orgsRepository = new InMemoryOrgsRepository()
     sut = new CreateOrgUseCase(orgsRepository)
   })
 

@@ -2,7 +2,7 @@ import { Address, Org } from "@prisma/client"
 import { CreateOrgParams, OrgsRepository } from "../orgs-repository"
 import { randomUUID } from "node:crypto"
 
-export class InMemoryOrgRepository implements OrgsRepository {
+export class InMemoryOrgsRepository implements OrgsRepository {
   public orgs: Org[] = []
   public addresses: Address[] = []
 
