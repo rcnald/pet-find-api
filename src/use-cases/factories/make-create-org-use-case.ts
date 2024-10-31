@@ -1,9 +1,9 @@
-import { PrismaOrgRepository } from "@/repositories/prisma/prisma-orgs-repository"
+import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-orgs-repository"
 import { CreateOrgUseCase } from "../create-org"
 
 export function makeCreateOrgUseCase() {
-  const orgRepository = new PrismaOrgRepository()
-  const useCase = new CreateOrgUseCase(orgRepository)
+  const orgsRepository = new PrismaOrgsRepository()
+  const useCase = new CreateOrgUseCase(orgsRepository)
 
   return useCase
 }

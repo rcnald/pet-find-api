@@ -1,7 +1,7 @@
 import { CreateOrgParams, OrgsRepository } from "../orgs-repository"
 import { prisma } from "@/lib/prisma"
 
-export class PrismaOrgRepository implements OrgsRepository {
+export class PrismaOrgsRepository implements OrgsRepository {
   async findByEmail(email: string) {
     const org = await prisma.org.findUnique({ where: { email } })
 
