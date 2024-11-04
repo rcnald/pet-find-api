@@ -1,4 +1,4 @@
-import { OrgAlreadyExists } from "@/use-cases/error/org-already-exists-error"
+import { OrgAlreadyExistsError } from "@/use-cases/error/org-already-exists-error"
 import { makeCreateOrgUseCase } from "@/use-cases/factories/make-create-org-use-case"
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
@@ -46,7 +46,7 @@ export async function create(req: FastifyRequest, rep: FastifyReply) {
       zip_code,
     })
   } catch (err) {
-    if (err instanceof OrgAlreadyExists) {
+    if (err instanceof OrgAlreadyExistsError) {
       return rep.status(409).send({ message: err.message })
     }
   }
