@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { CreateOrgUseCase } from "./create-org"
 import { OrgsRepository } from "@/repositories/orgs-repository"
-import { OrgAlreadyExists } from "./error/org-already-exists-error"
+import { OrgAlreadyExistsError } from "./error/org-already-exists-error"
 import { InMemoryOrgsRepository } from "@/repositories/in-memory/in-memory-orgs-repository"
 
 let orgsRepository: OrgsRepository
@@ -47,7 +47,7 @@ describe("Create org", () => {
     await sut.execute(orgData)
 
     await expect(() => sut.execute(orgData)).rejects.toBeInstanceOf(
-      OrgAlreadyExists,
+      OrgAlreadyExistsError,
     )
   })
 })
