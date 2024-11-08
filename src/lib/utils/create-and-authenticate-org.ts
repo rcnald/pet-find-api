@@ -4,7 +4,7 @@ import { prisma } from "../prisma"
 import { hash } from "bcryptjs"
 
 export async function createAndAuthenticateOrg(app: FastifyInstance) {
-  await prisma.org.create({
+  const org = await prisma.org.create({
     data: {
       email: "ronaldomjunior05@gmail.com",
       password_hash: await hash("ronaldo250805", 13),
@@ -32,5 +32,6 @@ export async function createAndAuthenticateOrg(app: FastifyInstance) {
 
   return {
     token,
+    orgId: org.id,
   }
 }

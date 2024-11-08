@@ -1,5 +1,10 @@
 import { prisma } from "@/lib/prisma"
-import { CreatePetParams, PetsRepository } from "../pets-repository"
+import {
+  CreatePetParams,
+  FetchedPet,
+  FindManyPetsParams,
+  PetsRepository,
+} from "../pets-repository"
 
 export class PrismaPetsRepository implements PetsRepository {
   async create(data: CreatePetParams) {
@@ -29,5 +34,43 @@ export class PrismaPetsRepository implements PetsRepository {
     })
 
     return pet
+  }
+
+  async findMany(data: FindManyPetsParams): Promise<FetchedPet[]> {
+    const petsInTheCity = await prisma.pet.findMany({
+      where: {
+        id: {
+          in: data.pets_id,
+        },
+        address: {
+          city: data.city,
+          state: data.state,
+        },
+      },
+    })
+
+    const pets = petsInTheCity
+      .map((pet) => {
+        let matchScore = 0
+
+        if (pet.age === data.age) matchScore += 1
+        if (pet.energy_level === data.energy_level) matchScore += 1
+        if (pet.independence_level === data.independence_level) matchScore += 1
+        if (pet.size === data.size) matchScore += 1
+        if (pet.type === data.type) matchScore += 1
+
+        return {
+          name: pet.name,
+          id: pet.id,
+          type: pet.type,
+          matchScore,
+        }
+      })
+      .sort((a, b) => b.matchScore - a.matchScore)
+      .map((pet) => {
+        return { id: pet.id, name: pet.name, type: pet.type }
+      })
+
+    return pets
   }
 }
