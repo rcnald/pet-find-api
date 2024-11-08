@@ -25,4 +25,15 @@ export class PrismaAdoptionsRepository implements AdoptionsRepository {
 
     return adoption
   }
+
+  async findManyPets(): Promise<Array<string>> {
+    const petsId = await prisma.adoption.findMany({
+      where: { adopted_at: null },
+      select: {
+        pet_id: true,
+      },
+    })
+
+    return petsId.map((petsId) => petsId.pet_id)
+  }
 }

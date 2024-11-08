@@ -28,4 +28,12 @@ export class InMemoryAdoptionsRepository implements AdoptionsRepository {
 
     return adoption
   }
+
+  async findManyPets() {
+    const pets = this.adoptions.map((adoption) => {
+      return adoption.pet_id
+    })
+
+    return pets
+  }
 }
