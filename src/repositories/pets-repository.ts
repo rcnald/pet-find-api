@@ -20,4 +20,5 @@ export interface FindManyPetsParams {
 export interface PetsRepository {
   create(data: CreatePetParams): Promise<Pet>
   findMany(data: FindManyPetsParams): Promise<FetchedPet[]>
+  findById(id: string): Promise<Pet | null>
 }

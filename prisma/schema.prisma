@@ -40,6 +40,7 @@ enum Type {
 
 model Org {
   id            String @id @default(uuid())
+  name          String @default("org name")
   responsible   String
   email         String @unique
   password_hash String

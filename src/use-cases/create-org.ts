@@ -6,6 +6,7 @@ import { OrgsRepository } from "@/repositories/orgs-repository"
 const { hash } = bcryptjs
 
 interface CreateOrgUseCaseRequest {
+  name: string
   responsible: string
   email: string
   password: string
@@ -26,6 +27,7 @@ export class CreateOrgUseCase {
   constructor(private orgsRepository: OrgsRepository) {}
 
   async execute({
+    name,
     city,
     email,
     neighborhood,
@@ -46,6 +48,7 @@ export class CreateOrgUseCase {
     const password_hash = await hash(password, 13)
 
     const org = await this.orgsRepository.create({
+      name,
       city,
       email,
       neighborhood,

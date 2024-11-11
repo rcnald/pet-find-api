@@ -1,27 +1,31 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { OrgsRepository } from "@/repositories/orgs-repository"
 import { InMemoryOrgsRepository } from "@/repositories/in-memory/in-memory-orgs-repository"
-import { InMemoryAdoptionsRepository } from "@/repositories/in-memory/in-memory-adoptions-repository"
-import { AdoptionsRepository } from "@/repositories/adoptions-repository"
-import { CreateAdoptionUseCase } from "./create-adoption"
+import { DetailAdoptionUseCase } from "./detail-adoption"
 import { PetsRepository } from "@/repositories/pets-repository"
+import { AdoptionsRepository } from "@/repositories/adoptions-repository"
 import { InMemoryPetsRepository } from "@/repositories/in-memory/in-memory-pets-repository"
-import { PetIsAlreadyUpForAdoptionError } from "./error/pet-is-already-up-for-adoption-error"
+import { InMemoryAdoptionsRepository } from "@/repositories/in-memory/in-memory-adoptions-repository"
+import { ResourceNotFoundError } from "./error/resource-not-found-error"
 
-let adoptionsRepository: AdoptionsRepository
-let sut: CreateAdoptionUseCase
 let orgsRepository: OrgsRepository
 let petsRepository: PetsRepository
+let adoptionsRepository: AdoptionsRepository
+let sut: DetailAdoptionUseCase
 
-describe("Create adoption", () => {
+describe("Detail adoption", () => {
   beforeEach(() => {
-    adoptionsRepository = new InMemoryAdoptionsRepository()
-    sut = new CreateAdoptionUseCase(adoptionsRepository)
     orgsRepository = new InMemoryOrgsRepository()
     petsRepository = new InMemoryPetsRepository()
+    adoptionsRepository = new InMemoryAdoptionsRepository()
+    sut = new DetailAdoptionUseCase(
+      adoptionsRepository,
+      petsRepository,
+      orgsRepository,
+    )
   })
 
-  it("should be able to create an adoption", async () => {
+  it("should be able to detail an adoption", async () => {
     const org = await orgsRepository.create({
       name: "treze pets",
       city: "sao paulo",
@@ -55,15 +59,19 @@ describe("Create adoption", () => {
       zip_code: "05875210",
     })
 
-    const { adoption } = await sut.execute({
+    await adoptionsRepository.create({
       org_id: org.id,
+      pet_id: pet.id,
+    })
+
+    const { adoption } = await sut.execute({
       pet_id: pet.id,
     })
 
     expect(adoption.id).toEqual(expect.any(String))
   })
 
-  it("should not be able to create an adoption for the same pet", async () => {
+  it("should not be able to detail an adoption, with not existence pet id", async () => {
     const org = await orgsRepository.create({
       name: "treze pets",
       city: "sao paulo",
@@ -97,16 +105,15 @@ describe("Create adoption", () => {
       zip_code: "05875210",
     })
 
-    await sut.execute({
+    await adoptionsRepository.create({
       org_id: org.id,
       pet_id: pet.id,
     })
 
     await expect(() =>
       sut.execute({
-        org_id: org.id,
-        pet_id: pet.id,
+        pet_id: "not-existing-pet-id",
       }),
-    ).rejects.toBeInstanceOf(PetIsAlreadyUpForAdoptionError)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

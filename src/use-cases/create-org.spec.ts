@@ -15,6 +15,7 @@ describe("Create org", () => {
 
   it("should be able to create an org", async () => {
     const { org } = await sut.execute({
+      name: "treze pets",
       city: "sao paulo",
       email: "ronaldomjunior05@gmail.com",
       neighborhood: "independência",
@@ -32,6 +33,7 @@ describe("Create org", () => {
 
   it("should not be able to create an org with email already registered", async () => {
     const orgData = {
+      name: "treze pets",
       city: "sao paulo",
       email: "ronaldomjunior05@gmail.com",
       neighborhood: "independência",

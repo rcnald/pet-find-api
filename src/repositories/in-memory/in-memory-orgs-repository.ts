@@ -6,6 +6,16 @@ export class InMemoryOrgsRepository implements OrgsRepository {
   public orgs: Org[] = []
   public addresses: Address[] = []
 
+  async findById(id: string) {
+    const org = this.orgs.find((org) => org.id === id)
+
+    if (!org) {
+      return null
+    }
+
+    return org
+  }
+
   async findByEmail(email: string) {
     const org = this.orgs.find((org) => org.email === email)
 
@@ -31,6 +41,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
 
     const org: Org = {
       id: randomUUID(),
+      name: data.name,
       email: data.email,
       password_hash: data.password_hash,
       phone: data.phone,
