@@ -19,6 +19,16 @@ export class InMemoryAdoptionsRepository implements AdoptionsRepository {
     return adoption
   }
 
+  async findById(id: string): Promise<Adoption | null> {
+    const adoption = this.adoptions.find((adoption) => {
+      return adoption.id === id
+    })
+
+    if (!adoption) return null
+
+    return adoption
+  }
+
   async findByPetId(petId: string) {
     const adoption = this.adoptions.find((adoption) => {
       return adoption.pet_id === petId

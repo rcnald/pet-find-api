@@ -1,19 +1,19 @@
 import { ResourceNotFoundError } from "@/use-cases/error/resource-not-found-error"
-import { makeDetailAdoptionUseCase } from "@/use-cases/factories/make-detail-adoption-use-case"
+import { makeAdoptUseCase } from "@/use-cases/factories/make-adopt-use-case copy"
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
-export async function detail(req: FastifyRequest, rep: FastifyReply) {
+export async function adopt(req: FastifyRequest, rep: FastifyReply) {
   const detailAdoptionParamsSchema = z.object({
-    pet_id: z.string().uuid(),
+    adoption_id: z.string().uuid(),
   })
 
-  const { pet_id } = detailAdoptionParamsSchema.parse(req.params)
+  const { adoption_id } = detailAdoptionParamsSchema.parse(req.params)
 
   try {
-    const detailAdoptionUseCase = makeDetailAdoptionUseCase()
+    const adoptUseCase = makeAdoptUseCase()
 
-    const { adoption } = await detailAdoptionUseCase.execute({ pet_id })
+    const { adoption } = await adoptUseCase.execute({ adoption_id })
 
     return rep.status(200).send({ adoption })
   } catch (err) {

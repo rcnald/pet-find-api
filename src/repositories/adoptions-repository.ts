@@ -14,6 +14,7 @@ export type FetchedPet = Pick<Pet, "id" | "name" | "type">
 
 export interface AdoptionsRepository {
   create(data: Prisma.AdoptionUncheckedCreateInput): Promise<Adoption>
+  findById(id: string): Promise<Adoption | null>
   findByPetId(petId: string): Promise<Adoption | null>
   findManyPets(): Promise<Array<string>>
 }

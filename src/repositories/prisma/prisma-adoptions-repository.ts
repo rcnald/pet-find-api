@@ -16,6 +16,16 @@ export class PrismaAdoptionsRepository implements AdoptionsRepository {
     return adoption
   }
 
+  async findById(id: string) {
+    const adoption = await prisma.adoption.findFirst({
+      where: {
+        id,
+      },
+    })
+
+    return adoption
+  }
+
   async findByPetId(petId: string) {
     const adoption = await prisma.adoption.findFirst({
       where: {
