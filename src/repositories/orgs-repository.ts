@@ -6,5 +6,6 @@ export type CreateOrgParams = MakeOptional<Omit<Org, "address_id">, "id"> &
 
 export interface OrgsRepository {
   findByEmail(email: string): Promise<Org | null>
+  findById(id: string): Promise<Org | null>
   create(data: CreateOrgParams): Promise<Org>
 }

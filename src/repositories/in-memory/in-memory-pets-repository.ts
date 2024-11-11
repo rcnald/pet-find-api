@@ -10,6 +10,14 @@ export class InMemoryPetsRepository implements PetsRepository {
   public pets: Pet[] = []
   public addresses: Address[] = []
 
+  async findById(id: string) {
+    const pet = this.pets.find((pet) => pet.id === id)
+
+    if (pet) return pet
+
+    return null
+  }
+
   async create(data: CreatePetParams) {
     const address: Address = {
       id: randomUUID(),
