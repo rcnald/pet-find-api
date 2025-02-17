@@ -1,6 +1,57 @@
-# App
+# Find A Friend
 
-Pet Find App.
+Uma API REST desenvolvida em Node.js, Fastify e TypeScript para conectar pessoas a pets disponíveis para adoção, facilitando o processo de adoção de animais de estimação de forma segura e eficiente.
+
+Este projeto foi desenvolvido como parte dos meus estudos em backend, utilizando tecnologias modernas como Node.js, Fastify, TypeScript, Prisma para gerenciamento do banco de dados PostgreSQL, e Zod para validação de dados. A API oferece um sistema completo para gerenciamento de pets e ORGs, incluindo cadastro, busca e processo de adoção.
+
+## Pré-requisitos
+
+Antes de começar, certifique-se de ter o [Node.js](https://nodejs.org/) instalado em seu sistema.
+
+## Como Usar
+
+### 1. Clone este repositório:
+```bash
+git clone https://github.com/rcnald/pet-find-api.git
+# ou
+gh repo clone rcnald/pet-find-api
+```
+
+### 2. Entre no diretório do projeto:
+```bash
+cd pet-find-api
+```
+
+### 3. Instale as dependências do projeto:
+```bash
+npm install
+```
+
+### 4. Inicie o projeto:
+```bash
+npm run dev
+```
+O projeto será iniciado na porta [http://localhost:3333](http://localhost:3333) (se disponível).
+
+## Funcionalidades Principais
+
+### • Gerenciamento de Pets
+- Cadastro completo de pets com informações detalhadas
+- Listagem de pets por cidade com filtros personalizados
+- Visualização detalhada das informações do pet
+- Sistema de adoção integrado
+
+### • Sistema de ORGs
+- Cadastro e autenticação de organizações
+- Perfil completo com endereço e contato
+- Dashboard administrativo para gerenciar pets
+- Integração com WhatsApp para comunicação
+
+### • Segurança e Performance
+- Autenticação robusta com JWT
+- Senha criptografada para proteção dos dados
+- Dados persistidos em PostgreSQL
+- Sistema de paginação eficiente
 
 ## RFs (Requisitos funcionais)
 
@@ -22,11 +73,7 @@ Pet Find App.
 - [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
 
 ## RNFs (Requisitos não-funcionais)
-<!-- 
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [x] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token); -->
-
-<!-- https://www.figma.com/community/file/1220006040435238030/find-a-friend-app -->
-<!-- https://github.com/rocketseat-education/ignite-nodejs-03-api-solid-nodejs-challenge -->
